@@ -25,3 +25,12 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+/.idea/vcs.xml
+/.idea/other.xml
+/.idea/libraries/Dart_Packages.xml
+/.idea/libraries/Dart_SDK.xml
+/.idea/libraries/Flutter_Plugins.xml
+/chkbmap.iml
+/analysis_options.yaml
+/.metadata
+/test/widget_test.dart
