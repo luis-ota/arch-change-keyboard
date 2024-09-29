@@ -6,7 +6,7 @@ void main() async {
   runApp(const MyApp());
 
   doWhenWindowReady(() {
-    const initialSize = Size(380, 250);
+    const initialSize = Size(380, 180);
     appWindow.minSize = initialSize;
     appWindow.size = initialSize;
     appWindow.alignment = Alignment.bottomRight;
@@ -23,8 +23,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
+
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Colors.black, // Set background color to black
+      ),
+      home: const HomeScreen(),
     );
   }
 }
