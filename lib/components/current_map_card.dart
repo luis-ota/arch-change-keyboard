@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
@@ -23,7 +22,7 @@ class _CurrentMapCardState extends State<CurrentMapCard> {
       height: 80,
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(25),
         ),
         shadowColor: Colors.purple,
         elevation: 10,

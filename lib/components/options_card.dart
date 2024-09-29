@@ -1,14 +1,9 @@
-import 'dart:ffi';
-
-import 'package:flutter/foundation.dart';
+import 'package:chkbmap/screens/settings_page.dart';
+import 'package:chkbmap/screens/star_page.dart';
 import 'package:flutter/material.dart';
 
-
 class OptionsCard extends StatefulWidget {
-
-
-  const OptionsCard(
-      {super.key});
+  const OptionsCard({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -20,7 +15,9 @@ class _OptionsCardState extends State<OptionsCard> {
   bool searchVisible = true;
   bool starVisible = true;
   bool settingsVisible = true;
+  bool isSearchExpanded = false;
   double optionsCardWidth = 140;
+  final TextEditingController _searchController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -31,7 +28,8 @@ class _OptionsCardState extends State<OptionsCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300), // Animação suave da expansão
             width: optionsCardWidth,
             height: 65,
             child: Card(
@@ -40,16 +38,50 @@ class _OptionsCardState extends State<OptionsCard> {
               ),
               color: Colors.black54,
               child: Row(
-
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Visibility(visible: searchVisible, child: Row(
-                    children: [
-                      IconButton(onPressed: ExpandSearch, icon: const Icon(Icons.search, color: Colors.black,)),
-                    ],
-                  )),
-                  Visibility(visible: starVisible, child: IconButton(onPressed: (){}, icon: const Icon(Icons.star, color: Colors.black,))),
-                  Visibility(visible:settingsVisible, child: IconButton(onPressed: (){}, icon: const Icon(Icons.settings, color: Colors.black,))),
+                  Visibility(
+                    visible: searchVisible,
+                    child: IconButton(
+                      onPressed: _toggleSearch,
+                      icon: Icon(!isSearchExpanded ? Icons.search : Icons.close, color: Colors.black,),
+                    ),
+                  ),
+
+                  if (isSearchExpanded)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                        child: TextFormField(
+                          controller: _searchController,
+                          decoration: const InputDecoration(
+                            hintText: 'Search...',
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(color: Colors.black54),
+                          ),
+                          style: const TextStyle(color: Colors.black54),
+                          autofocus: true,
+                        ),
+                      ),
+                    ),
+
+                  // Ícone de estrela
+                  Visibility(
+                    visible: starVisible && !isSearchExpanded,
+                    child: IconButton(
+                      onPressed: _goToStarPage,
+                      icon: const Icon(Icons.star, color: Colors.black),
+                    ),
+                  ),
+
+                  // Ícone de configurações
+                  Visibility(
+                    visible: settingsVisible && !isSearchExpanded,
+                    child: IconButton(
+                      onPressed: _goToSettingsPage,
+                      icon: const Icon(Icons.settings, color: Colors.black),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -59,11 +91,33 @@ class _OptionsCardState extends State<OptionsCard> {
     );
   }
 
-  Future<void> ExpandSearch() async {
+  void _toggleSearch() {
     setState(() {
-      starVisible = false;
-      settingsVisible = false;
-      optionsCardWidth = 350 ;
+      if (isSearchExpanded) {
+        starVisible = true;
+        settingsVisible = true;
+        optionsCardWidth = 140;
+        isSearchExpanded = false;
+      } else {
+        starVisible = false;
+        settingsVisible = false;
+        optionsCardWidth = 350;
+        isSearchExpanded = true;
+      }
     });
+  }
+
+  void _goToStarPage(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const StarPage()),
+    );
+  }
+
+  void _goToSettingsPage(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SettingsPage()),
+    );
   }
 }
