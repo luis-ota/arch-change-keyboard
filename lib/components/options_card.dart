@@ -18,7 +18,6 @@ class _OptionsCardState extends State<OptionsCard> {
   bool isSearchExpanded = false;
   double optionsCardWidth = 140;
   final TextEditingController _searchController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +58,12 @@ class _OptionsCardState extends State<OptionsCard> {
                             border: InputBorder.none,
                             hintStyle: TextStyle(color: Colors.black54),
                           ),
-                          style: const TextStyle(color: Colors.black54),
+                          style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
                           autofocus: true,
                         ),
                       ),
                     ),
 
-                  // Ícone de estrela
                   Visibility(
                     visible: starVisible && !isSearchExpanded,
                     child: IconButton(
@@ -74,7 +72,6 @@ class _OptionsCardState extends State<OptionsCard> {
                     ),
                   ),
 
-                  // Ícone de configurações
                   Visibility(
                     visible: settingsVisible && !isSearchExpanded,
                     child: IconButton(

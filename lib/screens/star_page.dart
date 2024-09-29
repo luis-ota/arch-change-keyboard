@@ -13,23 +13,26 @@ class _StarPageState extends State<StarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        child: Column(
-          children: [
-            Row(children: [
-              IconButton(icon: Icon(Icons.arrow_back_ios_outlined), onPressed: () => Navigator.pop(context),)
-            ],),
-            Expanded(
-              child: ListView(
-                children: const [
-                  CurrentMapCard(),
-                  CurrentMapCard(),
-                  CurrentMapCard(),
-                ],
+      body: Column(
+        children: [
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios_outlined),
+                onPressed: () => Navigator.pop(context),
               ),
+            ],
+          ),
+          Expanded(
+            child: ListView(
+              children: const [
+                CurrentMapCard(),
+                CurrentMapCard(),
+                CurrentMapCard(),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
