@@ -1,3 +1,4 @@
+import 'package:chkbmap/screens/search_page.dart';
 import 'package:chkbmap/screens/settings_page.dart';
 import 'package:chkbmap/screens/star_page.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,9 @@ class _OptionsCardState extends State<OptionsCard> {
                               color: Colors.black54,
                               fontWeight: FontWeight.bold),
                           autofocus: true,
+                          onFieldSubmitted: (value) {
+                            _goToSearcPage(value);
+                          },
                         ),
                       ),
                     ),
@@ -119,5 +123,20 @@ class _OptionsCardState extends State<OptionsCard> {
       context,
       MaterialPageRoute(builder: (context) => const SettingsPage()),
     );
+  }
+
+  // Function to handle the printing of the search text
+  void _goToSearcPage(String text) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SearchPage(initialSearch: text)));
+    setState(() {
+      _searchController.text = "";
+      starVisible = true;
+      settingsVisible = true;
+      optionsCardWidth = 140;
+      isSearchExpanded = false;
+    });
   }
 }

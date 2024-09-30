@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
-class StarredMapCard extends StatefulWidget {
+class MapOptionCard extends StatefulWidget {
   final String name;
+  final String id;
+  final bool starred;
 
-  const StarredMapCard({super.key, required this.name});
+  const MapOptionCard({super.key, required this.name, required this.id, this.starred = false});
 
   @override
   State<StatefulWidget> createState() {
-    return _StarredMapCardState();
+    return _MapOptionCardState();
   }
 }
 
-class _StarredMapCardState extends State<StarredMapCard> {
+class _MapOptionCardState extends State<MapOptionCard> {
   ShapeBorder shape = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(25),
   );
-  bool starred = true;
+  late bool starred = widget.starred;
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +35,10 @@ class _StarredMapCardState extends State<StarredMapCard> {
           },
           shape: shape,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const SizedBox(
-                width: 340 / 3,
-              ),
+
               SizedBox(
-                width: 340 / 3,
                 child: Text(
                   widget.name,
                   style: const TextStyle(
@@ -50,7 +49,6 @@ class _StarredMapCardState extends State<StarredMapCard> {
                 ),
               ),
               SizedBox(
-                width: 340 / 3,
                 child: IconButton(
                   onPressed: _updateStarred,
                   icon: Icon(
