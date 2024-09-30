@@ -10,23 +10,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
-        body: SizedBox(
-          width: double.maxFinite,
-          height: double.maxFinite,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CurrentMapCard(),
-              OptionsCard()
-            ],
-          ),
-        )
-      ),
+          body: SizedBox(
+        width: double.maxFinite,
+        height: double.maxFinite,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CurrentMapCard(
+              name: "English",
+            ),
+            OptionsCard()
+          ],
+        ),
+      )),
     );
   }
 }

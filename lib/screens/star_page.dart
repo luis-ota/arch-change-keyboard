@@ -1,4 +1,4 @@
-import 'package:chkbmap/components/current_map_card.dart';
+import 'package:chkbmap/components/starred_map_card.dart';
 import 'package:flutter/material.dart';
 
 class StarPage extends StatefulWidget {
@@ -9,7 +9,6 @@ class StarPage extends StatefulWidget {
 }
 
 class _StarPageState extends State<StarPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +25,9 @@ class _StarPageState extends State<StarPage> {
           Expanded(
             child: ListView(
               children: const [
-                CurrentMapCard(),
-                CurrentMapCard(),
-                CurrentMapCard(),
+                StarredMapCard(
+                  name: 'English',
+                ),
               ],
             ),
           ),

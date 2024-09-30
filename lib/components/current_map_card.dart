@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-
 class CurrentMapCard extends StatefulWidget {
+  final String name;
 
-
-  const CurrentMapCard(
-      {super.key});
+  const CurrentMapCard({super.key, required this.name});
 
   @override
   State<StatefulWidget> createState() {
@@ -14,6 +12,7 @@ class CurrentMapCard extends StatefulWidget {
 }
 
 class _CurrentMapCardState extends State<CurrentMapCard> {
+  bool starred = true;
 
   @override
   Widget build(BuildContext context) {
@@ -27,29 +26,57 @@ class _CurrentMapCardState extends State<CurrentMapCard> {
         shadowColor: Colors.purple,
         elevation: 10,
         color: Colors.deepPurpleAccent,
-        child: const Column(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 2,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-
-              children: [
-                SizedBox(width: 25,),
-                SizedBox(child: Text("Current:", style: TextStyle(fontWeight: FontWeight.bold),),),
-              ],
+            const SizedBox(
+              width: 340 / 3,
+              height: 60,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Current:",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(width: 20,),
-                SizedBox(child: Text("English", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),),),
-                SizedBox(child: Icon(Icons.star, size: 30,),)
-              ],
+            SizedBox(
+              width: 340 / 3,
+              child: Text(
+                widget.name,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+            ),
+            SizedBox(
+              width: 340 / 3,
+              child: IconButton(
+                onPressed: _updateStarred,
+                icon: Icon(
+                  starred ? Icons.star : Icons.star_border,
+                  size: 30,
+                  color: Colors.black,
+                ),
+                splashRadius: 1,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _updateStarred() {
+    setState(() {
+      starred = !starred;
+    });
   }
 }
