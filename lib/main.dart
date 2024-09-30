@@ -12,7 +12,8 @@ void main() async {
     appWindow.alignment = Alignment.bottomRight;
 
     final currentPosition = appWindow.position;
-    appWindow.position = Offset(currentPosition.dx - 40, currentPosition.dy - 40);
+    appWindow.position =
+        Offset(currentPosition.dx - 40, currentPosition.dy - 40);
 
     appWindow.show();
   });
@@ -23,7 +24,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black, // Set background color to black

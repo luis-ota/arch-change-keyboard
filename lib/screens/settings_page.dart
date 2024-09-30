@@ -1,4 +1,3 @@
-import 'package:chkbmap/components/current_map_card.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -9,17 +8,23 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
         child: Column(
           children: [
-            Row(children: [
-              IconButton(icon: Icon(Icons.arrow_back_ios_outlined), onPressed: () => Navigator.pop(context),)
-            ],),
-            Center(child: Text("Settings Page"),),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_back_ios_outlined),
+                  onPressed: () => Navigator.pop(context),
+                )
+              ],
+            ),
+            Center(
+              child: Text("Settings Page"),
+            ),
           ],
         ),
       ),

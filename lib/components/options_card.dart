@@ -28,7 +28,8 @@ class _OptionsCardState extends State<OptionsCard> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           AnimatedContainer(
-            duration: const Duration(milliseconds: 300), // Animação suave da expansão
+            duration: const Duration(milliseconds: 300),
+            // Animação suave da expansão
             width: optionsCardWidth,
             height: 65,
             child: Card(
@@ -43,10 +44,12 @@ class _OptionsCardState extends State<OptionsCard> {
                     visible: searchVisible,
                     child: IconButton(
                       onPressed: _toggleSearch,
-                      icon: Icon(!isSearchExpanded ? Icons.search : Icons.close, color: Colors.black,),
+                      icon: Icon(
+                        !isSearchExpanded ? Icons.search : Icons.close,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-
                   if (isSearchExpanded)
                     Expanded(
                       child: Padding(
@@ -58,12 +61,13 @@ class _OptionsCardState extends State<OptionsCard> {
                             border: InputBorder.none,
                             hintStyle: TextStyle(color: Colors.black54),
                           ),
-                          style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold),
                           autofocus: true,
                         ),
                       ),
                     ),
-
                   Visibility(
                     visible: starVisible && !isSearchExpanded,
                     child: IconButton(
@@ -71,7 +75,6 @@ class _OptionsCardState extends State<OptionsCard> {
                       icon: const Icon(Icons.star, color: Colors.black),
                     ),
                   ),
-
                   Visibility(
                     visible: settingsVisible && !isSearchExpanded,
                     child: IconButton(
@@ -104,14 +107,14 @@ class _OptionsCardState extends State<OptionsCard> {
     });
   }
 
-  void _goToStarPage(){
+  void _goToStarPage() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const StarPage()),
     );
   }
 
-  void _goToSettingsPage(){
+  void _goToSettingsPage() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const SettingsPage()),

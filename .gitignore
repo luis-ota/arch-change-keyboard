@@ -34,3 +34,11 @@ doc/api/
 /analysis_options.yaml
 /.metadata
 /test/widget_test.dart
+# Default ignored files
+/shelf/
+/workspace.xml
+/misc.xml
+/modules.xml
+/runConfigurations/main_dart.xml
+/libraries/KotlinJavaRuntime.xml
+.idea

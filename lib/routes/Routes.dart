@@ -10,7 +10,10 @@ class Routes extends StatefulWidget {
 class _RoutesState extends State<Routes> {
   @override
   Widget build(BuildContext context) {
-    return const Material(child: Scaffold(
-      body: Text("routes"),
-    ),);
-}}
+    return const Material(
+      child: Scaffold(
+        body: Text("routes"),
+      ),
+    );
+  }
+}
