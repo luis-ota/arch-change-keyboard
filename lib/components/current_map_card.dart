@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class CurrentMapCard extends StatefulWidget {
   final String name;
+  final String id;
+  final bool starred;
 
-  const CurrentMapCard({super.key, required this.name});
+  const CurrentMapCard({super.key, required this.name, required this.id, required this.starred});
 
   @override
   State<StatefulWidget> createState() {
@@ -12,63 +14,41 @@ class CurrentMapCard extends StatefulWidget {
 }
 
 class _CurrentMapCardState extends State<CurrentMapCard> {
-  bool starred = true;
+  ShapeBorder shape = RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(25),
+  );
+  late bool starred = widget.starred;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 350,
       height: 80,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
+      child:  Card(
+        shape: shape,
         shadowColor: Colors.purple,
         elevation: 10,
         color: Colors.deepPurpleAccent,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(
-              width: 340 / 3,
-              height: 60,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Current:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
+        child: Center(
+          child: ListTile(
+            leading: Column(children: [Text('Current', style: TextStyle(fontSize: 15, color: Colors.black),)],),
+            title: Text(widget.name, style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black), textAlign: TextAlign.center,),
+            trailing: IconButton(
+              onPressed: _updateStarred,
+              icon: Icon(
+                starred ? Icons.star : Icons.star_border,
+                size: 30,
+                color: Colors.black,
               ),
+              splashRadius: 1,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              hoverColor: Colors.transparent,
             ),
-            SizedBox(
-              width: 340 / 3,
-              child: Text(
-                widget.name,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-            ),
-            SizedBox(
-              width: 340 / 3,
-              child: IconButton(
-                onPressed: _updateStarred,
-                icon: Icon(
-                  starred ? Icons.star : Icons.star_border,
-                  size: 30,
-                  color: Colors.black,
-                ),
-                splashRadius: 1,
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

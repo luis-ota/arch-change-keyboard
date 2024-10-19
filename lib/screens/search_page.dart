@@ -68,7 +68,8 @@ class _SearchPageState extends State<SearchPage> {
                     id: Provider.of<SearchResultProvider>(context,
                             listen: false)
                         .byIndex(i)
-                        .id),
+                        .id,
+                searched: true,),
               ),
             )
           ],
@@ -89,7 +90,7 @@ class _SearchPageState extends State<SearchPage> {
       String name = option.trim().replaceAll(id, "").trim();
       if(id!="" ){
         Provider.of<SearchResultProvider>(context, listen: false)
-            .put(MapOptionCard(name: name, id: id));
+            .put(MapOptionCard(name: name, id: id,));
       }
     }
   }

@@ -28,6 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               CurrentMapCard(
                 name: "English",
+                id: 'us',
+                starred: true,
               ),
               OptionsCard()
             ],

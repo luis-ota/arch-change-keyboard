@@ -28,6 +28,7 @@ class SearchResultProvider with ChangeNotifier {
           () => MapOptionCard(
                 id: mapOption.id,
                 name: mapOption.name,
+            searched: true,
               ));
     }
     organizar();
