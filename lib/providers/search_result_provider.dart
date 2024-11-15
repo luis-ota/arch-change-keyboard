@@ -1,5 +1,6 @@
-import 'package:chkbmap/components/map_option_card.dart';
 import 'package:flutter/material.dart';
+
+import '../components/map_option_card.dart';
 
 class SearchResultProvider with ChangeNotifier {
   final Map<String, MapOptionCard> mapOptionCards = {};
@@ -28,7 +29,7 @@ class SearchResultProvider with ChangeNotifier {
           () => MapOptionCard(
                 id: mapOption.id,
                 name: mapOption.name,
-            searched: true,
+                searched: true,
               ));
     }
     organizar();

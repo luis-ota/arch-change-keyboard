@@ -1,8 +1,9 @@
-import 'package:chkbmap/components/current_map_card.dart';
-import 'package:chkbmap/components/options_card.dart';
-import 'package:chkbmap/providers/search_result_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../components/current_map_card.dart';
+import '../components/options_card.dart';
+import '../providers/search_result_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

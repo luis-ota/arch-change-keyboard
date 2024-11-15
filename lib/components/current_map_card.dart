@@ -5,7 +5,8 @@ class CurrentMapCard extends StatefulWidget {
   final String id;
   final bool starred;
 
-  const CurrentMapCard({super.key, required this.name, required this.id, required this.starred});
+  const CurrentMapCard(
+      {super.key, required this.name, required this.id, required this.starred});
 
   @override
   State<StatefulWidget> createState() {
@@ -24,18 +25,29 @@ class _CurrentMapCardState extends State<CurrentMapCard> {
     return SizedBox(
       width: 350,
       height: 80,
-      child:  Card(
+      child: Card(
         shape: shape,
         shadowColor: Colors.purple,
         elevation: 10,
         color: Colors.deepPurpleAccent,
         child: Center(
           child: ListTile(
-            leading: Column(children: [Text('Current', style: TextStyle(fontSize: 15, color: Colors.black),)],),
-            title: Text(widget.name, style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black), textAlign: TextAlign.center,),
+            leading: Column(
+              children: [
+                Text(
+                  'Current',
+                  style: TextStyle(fontSize: 15, color: Colors.black),
+                )
+              ],
+            ),
+            title: Text(
+              widget.name,
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
             trailing: IconButton(
               onPressed: _updateStarred,
               icon: Icon(
