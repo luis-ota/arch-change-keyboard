@@ -1,8 +1,9 @@
-import 'package:chkbmap/components/map_option_card.dart';
-import 'package:chkbmap/providers/search_result_provider.dart';
-import 'package:chkbmap/utils/process_functios.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../components/map_option_card.dart';
+import '../providers/search_result_provider.dart';
+import '../utils/process_functios.dart';
 
 class SearchPage extends StatefulWidget {
   final String initialSearch;
@@ -50,7 +51,6 @@ class _SearchPageState extends State<SearchPage> {
                       autofocus: true,
                       onChanged: (value) {
                         _search(value);
-
                       },
                     ),
                   ),
@@ -61,15 +61,15 @@ class _SearchPageState extends State<SearchPage> {
               child: ListView.builder(
                 itemCount: Provider.of<SearchResultProvider>(context).count,
                 itemBuilder: (context, i) => MapOptionCard(
-                    name: Provider.of<SearchResultProvider>(context,
-                            listen: false)
-                        .byIndex(i)
-                        .name,
-                    id: Provider.of<SearchResultProvider>(context,
-                            listen: false)
-                        .byIndex(i)
-                        .id,
-                searched: true,),
+                  name:
+                      Provider.of<SearchResultProvider>(context, listen: false)
+                          .byIndex(i)
+                          .name,
+                  id: Provider.of<SearchResultProvider>(context, listen: false)
+                      .byIndex(i)
+                      .id,
+                  searched: true,
+                ),
               ),
             )
           ],
@@ -80,17 +80,22 @@ class _SearchPageState extends State<SearchPage> {
 
   Future<void> _search(String value) async {
     var result = await searchMapLayouts(value);
-    Provider.of<SearchResultProvider>(context, listen: false)
-        .mapOptionCards
-        .clear();
+    if (mounted) {
+      Provider.of<SearchResultProvider>(context, listen: false)
+          .mapOptionCards
+          .clear();
+    }
     List<String> options = result.split("\n");
 
-    for (String option in options.take(5)) {
+    for (String option in options.take(15)) {
       String id = option.trim().split(" ")[0];
       String name = option.trim().replaceAll(id, "").trim();
-      if(id!="" ){
+      if (id != "" && mounted) {
         Provider.of<SearchResultProvider>(context, listen: false)
-            .put(MapOptionCard(name: name, id: id,));
+            .put(MapOptionCard(
+          name: name,
+          id: id,
+        ));
       }
     }
   }

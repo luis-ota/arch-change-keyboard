@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
+import '../models/full_map_model.dart';
+
 Future<String> searchMapLayouts(String word) async {
   var process = await Process.start('/bin/bash', [
     '-c',
@@ -12,25 +16,66 @@ Future<String> searchMapLayouts(String word) async {
   String errors = await process.stderr.transform(utf8.decoder).join();
 
   if (errors.isNotEmpty) {
-    print("Error: $errors");
+    if (kDebugMode) {
+      print("Error: $errors");
+    }
+    // Send a desktop notification for errors
+    await Process.start('/bin/bash', [
+      '-c',
+      "notify-send -t 10000 'Error' 'Error while searching for map layouts: $errors'"
+    ]);
   }
 
   return output;
 }
 
-Future<Stream<String>> searchMapVariants(String word) async {
+Future<String> searchMapVariants(String word) async {
   var process = await Process.start('/bin/bash', [
     '-c',
-    "awk '/! variant/{flag=1; next} /!/{flag=0} flag' /usr/share/X11/xkb/rules/xorg.lst | grep $word -i"
+    "awk '/! variant/{flag=1; next} /!/{flag=0} flag' /usr/share/X11/xkb/rules/xorg.lst | grep $word: -i"
   ]);
 
-  Stream<String> output = await process.stdout.transform(utf8.decoder);
+  String output = await process.stdout.transform(utf8.decoder).join();
 
   String errors = await process.stderr.transform(utf8.decoder).join();
 
   if (errors.isNotEmpty) {
-    print("Error: $errors");
+    // Send a desktop notification for errors
+    await Process.start('/bin/bash', [
+      '-c',
+      "notify-send -t 10000 'Error' 'Error while searching for map variants: $errors'"
+    ]);
   }
 
   return output;
+}
+
+void setMap(FullMapModel fullMapOptions) async {
+  await Process.start('/bin/bash', [
+    '-c',
+    "notify-send -t 10000 'Info' 'Setting keyboard layout to ${fullMapOptions.idLayout}: ${fullMapOptions.idVariant}'"
+  ]);
+
+  var process = await Process.start('/bin/bash', [
+    '-c',
+    fullMapOptions.idVariant != "default"
+        ? "setxkbmap -layout ${fullMapOptions.idLayout} -variant ${fullMapOptions.idVariant}"
+        : "setxkbmap -layout ${fullMapOptions.idLayout}"
+  ]);
+
+  String errors = await process.stderr.transform(utf8.decoder).join();
+
+  if (errors.isNotEmpty) {
+    await Process.start('/bin/bash', [
+      '-c',
+      "notify-send -t 10000 'Error' 'Error while setting keyboard layout: $errors'"
+    ]);
+    await Process.start('/bin/bash', [
+      '-c',
+      "notify-send -t 10000 'Info' 'Setting to the selected layout default'"
+    ]);
+
+    await Process.start(
+        '/bin/bash', ['-c', "setxkbmap -layout ${fullMapOptions.idLayout}"]);
+  }
 }

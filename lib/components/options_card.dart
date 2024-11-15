@@ -30,7 +30,6 @@ class _OptionsCardState extends State<OptionsCard> {
         children: [
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            // Animação suave da expansão
             width: optionsCardWidth,
             height: 65,
             child: Card(
@@ -102,12 +101,13 @@ class _OptionsCardState extends State<OptionsCard> {
         settingsVisible = true;
         optionsCardWidth = 140;
         isSearchExpanded = false;
-      } else {
-        starVisible = false;
-        settingsVisible = false;
-        optionsCardWidth = 350;
-        isSearchExpanded = true;
+        return;
       }
+
+      starVisible = false;
+      settingsVisible = false;
+      optionsCardWidth = 350;
+      isSearchExpanded = true;
     });
   }
 
@@ -125,12 +125,12 @@ class _OptionsCardState extends State<OptionsCard> {
     );
   }
 
-  // Function to handle the printing of the search text
-  void _goToSearcPage(String text) {
-    Navigator.push(
+  Future<void> _goToSearcPage(String text) async {
+    await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => SearchPage(initialSearch: text)));
+
     setState(() {
       _searchController.text = "";
       starVisible = true;
