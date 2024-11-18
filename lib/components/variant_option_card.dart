@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/full_map_model.dart';
+import '../providers/current_map_provider.dart';
 import '../utils/process_functios.dart';
 
 class VariantOptionCard extends StatefulWidget {
@@ -81,5 +83,6 @@ class _VariantOptionCardState extends State<VariantOptionCard> {
   Future<void> _goToHome() async {
     setMap(FullMapModel(widget.idLayout, widget.id));
     Navigator.pop(context, 'pop');
+    await Provider.of<CurrentMapProvider>(context, listen: false).update();
   }
 }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/current_map_provider.dart';
 
 class CurrentMapCard extends StatefulWidget {
   final String name;
@@ -32,18 +35,18 @@ class _CurrentMapCardState extends State<CurrentMapCard> {
         color: Colors.deepPurpleAccent,
         child: Center(
           child: ListTile(
-            leading: Column(
+            leading: const Column(
               children: [
                 Text(
                   'Current',
-                  style: TextStyle(fontSize: 15, color: Colors.black),
+                  style: TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),
                 )
               ],
             ),
             title: Text(
-              widget.name,
+              Provider.of<CurrentMapProvider>(context).name,
               style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 17,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
               textAlign: TextAlign.center,

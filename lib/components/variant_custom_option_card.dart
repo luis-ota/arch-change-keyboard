@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/full_map_model.dart';
+import '../providers/current_map_provider.dart';
 import '../utils/process_functios.dart';
 
 class VariantCustomOptionCard extends StatefulWidget {
@@ -59,8 +61,9 @@ class _VariantCustomOptionCardState extends State<VariantCustomOptionCard> {
     );
   }
 
-  void _setCustom(String value) {
+  Future<void> _setCustom(String value) async {
     setMap(FullMapModel(widget.idLayout, value));
     Navigator.pop(context, 'pop');
+    await Provider.of<CurrentMapProvider>(context, listen: false).update();
   }
 }

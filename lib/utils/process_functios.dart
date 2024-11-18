@@ -77,5 +77,35 @@ void setMap(FullMapModel fullMapOptions) async {
 
     await Process.start(
         '/bin/bash', ['-c', "setxkbmap -layout ${fullMapOptions.idLayout}"]);
+
+
   }
 }
+
+
+Future<String> getCurrentMap() async {
+  var process = await Process.start('/bin/bash', [
+    '-c',
+    '''
+    layout=\$(setxkbmap -query | awk '/layout:/ {layout=\$2} END {system("awk \\047/! layout/{flag=1; next} /!/{flag=0} flag\\047 /usr/share/X11/xkb/rules/xorg.lst | grep \\047 " layout " \\047 -i")}' | sed 's/^[[:space:]]*[^[:space:]]\\+[[:space:]]\\+//')
+    variant=\$(setxkbmap -query | grep variant | awk '{print \$2}')
+    if [ -n "\$variant" ]; then
+        echo "\$layout \$variant"
+    else
+        echo "\$layout"
+    fi
+    '''
+  ]);
+
+  String output = await process.stdout.transform(utf8.decoder).join();
+  String errors = await process.stderr.transform(utf8.decoder).join();
+
+  if (errors.isNotEmpty) {
+    await Process.start('/bin/bash', [
+      '-c',
+      "notify-send -t 10000 'Error' 'Error while retriver keyboard map: $errors'"
+    ]);
+  }
+  return output.trim();
+}
+
