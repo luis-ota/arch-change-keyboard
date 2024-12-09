@@ -109,3 +109,27 @@ Future<String> getCurrentMap() async {
   return output.trim();
 }
 
+Future<FullMapModel> getCurrentMapIds() async {
+  var process = await Process.start('/bin/bash', [
+    '-c',
+    '''
+    layout=\$(setxkbmap -query | awk '/layout:/ {print \$2}')
+    variant=\$(setxkbmap -query | awk '/variant:/ {print \$2}')
+    echo "\$layout \$variant"
+    '''
+  ]);
+
+  String output = await process.stdout.transform(utf8.decoder).join();
+  String errors = await process.stderr.transform(utf8.decoder).join();
+
+  if (errors.isNotEmpty) {
+    await Process.start('/bin/bash', [
+      '-c',
+      "notify-send -t 10000 'Error' 'Error while retriver keyboard map: $errors'"
+    ]);
+  }
+  List<String> res = output.trim().split(" ");
+  String name = await getCurrentMap();
+  return FullMapModel(res.first, res.length>1 ? res.last: 'default', name: name);
+}
+

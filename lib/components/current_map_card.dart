@@ -1,15 +1,15 @@
+import 'package:chkbmap/models/full_map_model.dart';
+import 'package:chkbmap/utils/config_menager.dart';
+import 'package:chkbmap/utils/process_functios.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/current_map_provider.dart';
 
 class CurrentMapCard extends StatefulWidget {
-  final String name;
-  final String id;
-  final bool starred;
 
   const CurrentMapCard(
-      {super.key, required this.name, required this.id, required this.starred});
+      {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -21,7 +21,6 @@ class _CurrentMapCardState extends State<CurrentMapCard> {
   ShapeBorder shape = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(25),
   );
-  late bool starred = widget.starred;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +38,10 @@ class _CurrentMapCardState extends State<CurrentMapCard> {
               children: [
                 Text(
                   'Current',
-                  style: TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
                 )
               ],
             ),
@@ -54,7 +56,7 @@ class _CurrentMapCardState extends State<CurrentMapCard> {
             trailing: IconButton(
               onPressed: _updateStarred,
               icon: Icon(
-                starred ? Icons.star : Icons.star_border,
+                Provider.of<CurrentMapProvider>(context).isStarred ? Icons.star : Icons.star_border,
                 size: 30,
                 color: Colors.black,
               ),
@@ -69,9 +71,15 @@ class _CurrentMapCardState extends State<CurrentMapCard> {
     );
   }
 
-  void _updateStarred() {
-    setState(() {
-      starred = !starred;
-    });
+  Future<void> _updateStarred() async {
+    FullMapModel mapIds = await getCurrentMapIds();
+    Provider.of<CurrentMapProvider>(context, listen: false).setStarred(!Provider.of<CurrentMapProvider>(context, listen: false).isStarred);
+
+    if (Provider.of<CurrentMapProvider>(context, listen: false).isStarred) {
+      addMap(mapIds.idLayout, mapIds.idVariant,mapIds.idVariant!='default'?mapIds.name:"Default ${mapIds.name}");
+    } else {
+      removeMap(mapIds.idLayout, mapIds.idVariant);
+    };
+
   }
 }

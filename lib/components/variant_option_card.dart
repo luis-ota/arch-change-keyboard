@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../models/full_map_model.dart';
 import '../providers/current_map_provider.dart';
+import '../utils/config_menager.dart';
 import '../utils/process_functios.dart';
 
 class VariantOptionCard extends StatefulWidget {
@@ -29,7 +30,13 @@ class _VariantOptionCardState extends State<VariantOptionCard> {
   ShapeBorder shape = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(25),
   );
-  late bool starred = widget.starred;
+
+  late bool starred;
+  @override
+  void initState() {
+    starred = hashMap(widget.idLayout, widget.id);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +81,13 @@ class _VariantOptionCardState extends State<VariantOptionCard> {
     );
   }
 
-  void _updateStarred() {
+  Future<void> _updateStarred() async {
+    if (!starred) {
+      addMap(widget.idLayout, widget.id, widget.name);
+    } else {
+      removeMap(widget.idLayout, widget.id);
+    }
+    ;
     setState(() {
       starred = !starred;
     });

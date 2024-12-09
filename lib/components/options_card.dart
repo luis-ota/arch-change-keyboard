@@ -1,6 +1,7 @@
 import 'package:chkbmap/screens/search_page.dart';
 import 'package:chkbmap/screens/settings_page.dart';
 import 'package:chkbmap/screens/star_page.dart';
+import 'package:chkbmap/utils/config_menager.dart';
 import 'package:flutter/material.dart';
 
 class OptionsCard extends StatefulWidget {
@@ -111,10 +112,11 @@ class _OptionsCardState extends State<OptionsCard> {
     });
   }
 
-  void _goToStarPage() {
+  Future<void> _goToStarPage() async {
+    List<Map<String, String>> starrad_maps = await loadMaps();
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const StarPage()),
+      MaterialPageRoute(builder: (context) => StarPage(list_starred_maps: starrad_maps,)),
     );
   }
 
