@@ -2,7 +2,8 @@
 
 chkbmap is a minimal Linux application built with Flutter and native shell integration to switch the system keyboard layout to any language, providing desktop notifications for user feedback.
 
-![demo](./docs/demo.gif)
+<img src="./docs/demo.gif" height="500">
+
 
 ## Features
 
